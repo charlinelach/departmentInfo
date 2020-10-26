@@ -15,11 +15,11 @@ INSERT INTO role (title, salary) VALUES ("Mid-Level", 80000.00);
 
 
 -- EMPLOYEES (mgrid is selected mgr name)
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Vanessa", "Hudgens");
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Charline", "Lach");
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Heath", "Ledger");
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Keanu", "Reeves");
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Charlize", "Theron");
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Vanessa", "Hudgens", "Intern", "Heath Ledger");
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Charline", "Lach", "Mid-Level", "Charlize Theron");
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Heath", "Ledger", "Senior");
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Keanu", "Reeves", "Level II", "Charlize Theron");
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Charlize", "Theron", "Senior");
 
 
 
