@@ -102,6 +102,6 @@ class DB {
 //       managerId
 //     );
 //   }
-// }
+}
 
 module.exports = new DB(connection);
