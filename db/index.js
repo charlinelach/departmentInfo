@@ -13,26 +13,26 @@ class DB {
     );
   }
 
-  // Find all employees except the given employee id
-  findAllPossibleManagers(employeeId) {
-    return this.connection.query(
-      "SELECT id, first_name, last_name FROM employee WHERE id != ?",
-      employeeId
-    );
-  }
+  // // Find all employees except the given employee id
+  // findAllPossibleManagers(employeeId) {
+  //   return this.connection.query(
+  //     "SELECT id, first_name, last_name FROM employee WHERE id != ?",
+  //     employeeId
+  //   );
+  // }
 
   // Create a new employee
   createEmployee(employee) {
     return this.connection.query("INSERT INTO employee SET ?", employee);
   }
 
-  // Remove an employee with the given id
-  removeEmployee(employeeId) {
-    return this.connection.query(
-      "DELETE FROM employee WHERE id = ?",
-      employeeId
-    );
-  }
+  // // Remove an employee with the given id
+  // removeEmployee(employeeId) {
+  //   return this.connection.query(
+  //     "DELETE FROM employee WHERE id = ?",
+  //     employeeId
+  //   );
+  // }
 
   // Update the given employee's role
   updateEmployeeRole(employeeId, roleId) {
@@ -42,13 +42,13 @@ class DB {
     );
   }
 
-  // Update the given employee's manager
-  updateEmployeeManager(employeeId, managerId) {
-    return this.connection.query(
-      "UPDATE employee SET manager_id = ? WHERE id = ?",
-      [managerId, employeeId]
-    );
-  }
+  // // Update the given employee's manager
+  // updateEmployeeManager(employeeId, managerId) {
+  //   return this.connection.query(
+  //     "UPDATE employee SET manager_id = ? WHERE id = ?",
+  //     [managerId, employeeId]
+  //   );
+  // }
 
   // Find all roles, join with departments to display the department name
   findAllRoles() {
@@ -62,10 +62,10 @@ class DB {
     return this.connection.query("INSERT INTO role SET ?", role);
   }
 
-  // Remove a role from the db
-  removeRole(roleId) {
-    return this.connection.query("DELETE FROM role WHERE id = ?", roleId);
-  }
+  // // Remove a role from the db
+  // removeRole(roleId) {
+  //   return this.connection.query("DELETE FROM role WHERE id = ?", roleId);
+  // }
 
   // Find all departments, join with employees and roles and sum up utilized department budget
   findAllDepartments() {
@@ -79,13 +79,13 @@ class DB {
     return this.connection.query("INSERT INTO department SET ?", department);
   }
 
-  // Remove a department
-  removeDepartment(departmentId) {
-    return this.connection.query(
-      "DELETE FROM department WHERE id = ?",
-      departmentId
-    );
-  }
+  // // Remove a department
+  // removeDepartment(departmentId) {
+  //   return this.connection.query(
+  //     "DELETE FROM department WHERE id = ?",
+  //     departmentId
+  //   );
+  // }
 
   // Find all employees in a given department, join with roles to display role titles
   findAllEmployeesByDepartment(departmentId) {
@@ -95,13 +95,13 @@ class DB {
     );
   }
 
-  // Find all employees by manager, join with departments and roles to display titles and department names
-  findAllEmployeesByManager(managerId) {
-    return this.connection.query(
-      "SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, role.title FROM employee LEFT JOIN role on role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id WHERE manager_id = ?;",
-      managerId
-    );
-  }
-}
+//   // Find all employees by manager, join with departments and roles to display titles and department names
+//   findAllEmployeesByManager(managerId) {
+//     return this.connection.query(
+//       "SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, role.title FROM employee LEFT JOIN role on role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id WHERE manager_id = ?;",
+//       managerId
+//     );
+//   }
+// }
 
 module.exports = new DB(connection);
