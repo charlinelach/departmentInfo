@@ -1,5 +1,5 @@
-const { prompt } = require("inquirer");
-const logo = require("asciiart-logo");
+const inquirer = require("inquirer");
+//const logo = require("asciiart-logo");
 const db = require("./db");
 require("console.table");
 
@@ -7,16 +7,16 @@ init();
 
 // Display logo text, load main prompts
 function init() {
-    const logoText = logo({ name: "Employee Manager" }).render();
+    // const logoText = logo({ name: "Employee Manager" }).render();
 
-    console.log(logoText);
+    // console.log(logoText);
 
     loadMainPrompts();
 }
 
 // Minimum function
 async function loadMainPrompts() {
-    const { choice } = await prompt([
+    const { choice } = await inquirer.prompt([
         {
             type: "list",
             name: "choice",
@@ -57,28 +57,30 @@ async function loadMainPrompts() {
             ]
         }
     ])
+
+    // Sends user to function based on what they chose
+    switch (choice) {
+        case "VIEW_EMPLOYEES":
+            return viewEmployees();
+        case "VIEW_ROLES":
+            return viewRoles();
+        case "VIEW_DEPARTMENTS":
+            return viewDepartments();
+        case "ADD_EMPLOYEE":
+            return addEmployees();
+        case "ADD_ROLE":
+            return addRole();
+        case "ADD_DEPARTMENT":
+            return addDepartment();
+        case "UPDATE_EMPLOYEE":
+            return updateEmployee();
+        default:
+            return queueMicrotask();
+
+    }
 };
 
-// Sends user to function based on what they chose
-switch (choice) {
-    case "VIEW_EMPLOYEES":
-        return viewEmployees();
-    case "VIEW_ROLES":
-        return viewRoles();
-    case "VIEW_DEPARTMENTS":
-        return viewDepartments();
-    case "ADD_EMPLOYEE":
-        return addEmployees();
-    case "ADD_ROLE":
-        return addRole();
-    case "ADD_DEPARTMENT":
-        return addDepartment();
-    case "UPDATE_EMPLOYEE":
-        return updateEmployee();
-    default:
-        return queueMicrotask();
 
-}
 
 // VIEW
 async function viewEmployees() {
@@ -208,6 +210,48 @@ async function addDepartment() {
 
     loadMainPrompts();
 }
+
+// UPDATE
+async function updateEmployeeRole() {
+    const employees = await db.findAllEmployees();
+
+    const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+        name: `${first_name} ${last_name}`,
+        value: id
+    }));
+
+    const { employeeId } = await prompt([
+        {
+            type: "list",
+            name: "employeeId",
+            message: "Which employee's role do you want to update?",
+            choices: employeeChoices
+        }
+    ]);
+
+    const roles = await db.findAllRoles();
+
+    const roleChoices = roles.map(({ id, title }) => ({
+        name: title,
+        value: id
+    }));
+
+    const { roleId } = await prompt([
+        {
+            type: "list",
+            name: "roleId",
+            message: "Which role do you want to assign the selected employee?",
+            choices: roleChoices
+        }
+    ]);
+
+    await db.updateEmployeeRole(employeeId, roleId);
+
+    console.log("Updated employee's role");
+
+    loadMainPrompts();
+}
+
 
 // QUIT
 function quit() {

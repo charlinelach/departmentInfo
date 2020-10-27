@@ -9,52 +9,48 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
+INSERT INTO department (name) VALUES
+    ("Human Resources"),
+    ("Technology"),
+    ("Security");
+    
+SELECT * FROM department;
+
 CREATE TABLE role (
     id INTEGER NOT NULL AUTO_INCREMENT,
     title VARCHAR(30),
     salary DECIMAL,
     department_id INTEGER,
-    FOREIGN KEY (department_id) REFERENCES department(id),
+    CONSTRAINT fk_departmentid FOREIGN KEY (department_id) REFERENCES department(id),
     PRIMARY KEY (id)
 );
+
+INSERT INTO role (title, salary, department_id) VALUES
+    ("Intern", 35000.00, 2),
+    ("Level II", 70000.00, 3),
+    ("Senior", 90000.00, 1),
+    ("Mid-Level", 80000.00, 3);
+
+SELECT * FROM role;
 
 CREATE TABLE employee (
     id INTEGER NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     role_id INTEGER,
-    FOREIGN KEY (role_id) REFERENCES role(role_id),
+    CONSTRAINT fk_roleid FOREIGN KEY (role_id) REFERENCES role(id),
     manager_id INTEGER,
-    FOREIGN KEY (manager_id) REFERENCES employee(employee_id),
+    CONSTRAINT fk_managerid FOREIGN KEY (manager_id) REFERENCES employee(id),
     PRIMARY KEY (id)
 );
 
---------
-
--- DEPARTMENTS
-INSERT INTO department (name) VALUES
-    ("Human Resources"),
-    ("Technology"),
-    ("Security");
-
-
--- ROLES NEED DEPTID (deptid is selected dept name)
-INSERT INTO role (title, salary) VALUES
-    ("Intern", 35000.00),
-    ("Level II", 70000.00),
-    ("Senior", 90000.00),
-    ("Mid-Level", 80000.00);
-
-
--- EMPLOYEES (mgrid is selected mgr name)
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
-    ("Vanessa", "Hudgens", "Intern", "Heath Ledger"),
-    ("Charline", "Lach", "Mid-Level", "Charlize Theron"),
-    ("Heath", "Ledger", "Senior", NULL),
-    ("Keanu", "Reeves", "Level II", "Charlize Theron"),
-    ("Charlize", "Theron", "Senior", NULL);
+    ("Vanessa", "Hudgens", 1, 2),
+    ("Charline", "Lach", 4, 5),
+    ("Heath", "Ledger", 3, NULL),
+    ("Keanu", "Reeves", 2, 3),
+    ("Charlize", "Theron", 3, NULL);
+    
+SELECT * FROM employee;
 
-
-
--- Way to add more than one row
--- INSERT INTO products (flavor, price, quantity) VALUES ("vanilla", 2.50, 100), ("chocolate", 3.10, 120), ("strawberry", 3.25, 75);
+-- SELECT r.title, r.salary, d.name FROM role r, department d WHERE r.department_id = d.id;
