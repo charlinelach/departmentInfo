@@ -1,3 +1,5 @@
+// This was provided by HW GitHub Main
+
 const { prompt } = require("inquirer");
 const logo = require("asciiart-logo");
 const db = require("./db");
@@ -450,6 +452,6 @@ async function addEmployee() {
 }
 
 function quit() {
-  console.log("Goodbye!");
+  console.log("Hope that was successful!");
   process.exit();
 }
