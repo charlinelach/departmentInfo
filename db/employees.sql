@@ -45,10 +45,10 @@ CREATE TABLE employee (
 );
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
-    ("Vanessa", "Hudgens", 1, 2),
-    ("Charline", "Lach", 4, 5),
+    ("Vanessa", "Hudgens", 1, NULL),
+    ("Charline", "Lach", 4, NULL),
     ("Heath", "Ledger", 3, NULL),
-    ("Keanu", "Reeves", 2, 3),
+    ("Keanu", "Reeves", 2, NULL),
     ("Charlize", "Theron", 3, NULL);
     
 SELECT * FROM employee;
