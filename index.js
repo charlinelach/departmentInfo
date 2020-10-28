@@ -67,16 +67,17 @@ async function loadMainPrompts() {
         case "VIEW_DEPARTMENTS":
             return viewDepartments();
         case "ADD_EMPLOYEE":
-            return addEmployees();
+            return addEmployee();
         case "ADD_ROLE":
             return addRole();
         case "ADD_DEPARTMENT":
             return addDepartment();
         case "UPDATE_EMPLOYEE":
-            return updateEmployee();
+            return updateEmployeeRole();
+        case "EXIT":
+            return exit();
         default:
-            return queueMicrotask();
-
+            return exit();
     }
 };
 
@@ -115,7 +116,7 @@ async function addEmployee() {
     const roles = await db.findAllRoles();
     const employees = await db.findAllEmployees();
 
-    const employee = await prompt([
+    const employee = await inquirer.prompt([
         {
             name: "first_name",
             message: "What is the employee's first name?"
@@ -131,7 +132,7 @@ async function addEmployee() {
         value: id
     }));
 
-    const { roleId } = await prompt({
+    const { roleId } = await inquirer.prompt({
         type: "list",
         name: "roleId",
         message: "What is the employee's role?",
@@ -146,7 +147,7 @@ async function addEmployee() {
     }));
     managerChoices.unshift({ name: "None", value: null });
 
-    const { managerId } = await prompt({
+    const { managerId } = await inquirer.prompt({
         type: "list",
         name: "managerId",
         message: "Who is the employee's manager?",
@@ -172,7 +173,7 @@ async function addRole() {
         value: id
     }));
 
-    const role = await prompt([
+    const role = await inquirer.prompt([
         {
             name: "title",
             message: "What is the name of the role?"
@@ -197,7 +198,7 @@ async function addRole() {
 }
 
 async function addDepartment() {
-    const department = await prompt([
+    const department = await inquirer.prompt([
         {
             name: "name",
             message: "What is the name of the department?"
@@ -220,7 +221,7 @@ async function updateEmployeeRole() {
         value: id
     }));
 
-    const { employeeId } = await prompt([
+    const { employeeId } = await inquirer.prompt([
         {
             type: "list",
             name: "employeeId",
@@ -236,7 +237,7 @@ async function updateEmployeeRole() {
         value: id
     }));
 
-    const { roleId } = await prompt([
+    const { roleId } = await inquirer.prompt([
         {
             type: "list",
             name: "roleId",
@@ -254,7 +255,7 @@ async function updateEmployeeRole() {
 
 
 // QUIT
-function quit() {
+function exit() {
     console.log("Hope that was successful!");
     process.exit();
 }
